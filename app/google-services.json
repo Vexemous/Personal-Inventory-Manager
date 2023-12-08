@@ -1,0 +1,49 @@
+{
+  "project_info": {
+    "project_number": "977366051930",
+    "firebase_url": "https://inventory-manager-73bda-default-rtdb.asia-southeast1.firebasedatabase.app",
+    "project_id": "inventory-manager-73bda",
+    "storage_bucket": "inventory-manager-73bda.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:977366051930:android:c965089d847e6aac2f7c63",
+        "android_client_info": {
+          "package_name": "com.example.cameraapp"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDxiRzcPV0Bx7Ts6_AczXHn64lt2cIZUXM"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:977366051930:android:ba80fe53686a93cc2f7c63",
+        "android_client_info": {
+          "package_name": "com.example.inventorymanager"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDxiRzcPV0Bx7Ts6_AczXHn64lt2cIZUXM"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

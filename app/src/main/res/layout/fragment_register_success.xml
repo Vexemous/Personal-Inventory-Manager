@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:style="http://schemas.android.com/apk/res-auto"
+    android:gravity="center"
+    android:orientation="vertical"
+    android:transitionGroup="true"
+    tools:context=".gettingstarted.RegisterSuccessFragment">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="60dp"
+        android:gravity="center"
+        android:text="@string/register_success"
+        style="@style/PoppinsTitleText22" />
+
+    <Button
+        android:id="@+id/proceed_login"
+        android:layout_width="300dp"
+        android:layout_height="wrap_content"
+        android:text="@string/proceed_login"
+        style="@style/ButtonWithShadow"/>
+
+</LinearLayout>
