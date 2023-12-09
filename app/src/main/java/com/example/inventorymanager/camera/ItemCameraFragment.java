@@ -403,7 +403,7 @@ public class ItemCameraFragment extends Fragment {
         }
     }
 
-    // Use the ActivityResultLauncher to handle permission requests
+    // Use ActivityResultLauncher to handle permission requests
     private final ActivityResultLauncher<String[]> requestPermissionsLauncher = registerForActivityResult(
             new ActivityResultContracts.RequestMultiplePermissions(), permissions -> {
                 // Check if all permissions are granted
