@@ -115,14 +115,12 @@ public class InventoryFragment extends Fragment {
 
         if(networkUtils.isNetworkAvailable()) {
             // Setup Inventory Recycler View
-            Log.d("Network", "Network is available");
-            setupInventoryRecyclerView();
             setTopAppBarOnClick();
             setAddItemOnClick();
+            setupInventoryRecyclerView();
         }
         else {
             // Network is not available
-            Log.d("Network", "Network is not available");
             ToastUtils.showToast(getContext(), "Network is not available");
         }
 
@@ -151,49 +149,40 @@ public class InventoryFragment extends Fragment {
         if (mAuth.getCurrentUser() != null) {
             // User is signed in
             String currentUserId = mAuth.getCurrentUser().getUid();
-            setAppBarTitle(currentUserId);
 
-            // Reference to the "Inventory" SubCollection for the current user
-            inventoryRef = FirebaseFirestore.getInstance()
-                    .collection("users")
-                    .document(currentUserId)
-                    .collection("Inventory");
+            // Get the user's document data
+            DocumentReference userDocRef = FirebaseFirestore.getInstance().collection("users").document(currentUserId);
 
-            Query query = inventoryRef.orderBy("item_name", Query.Direction.ASCENDING);
+            // Setup information for the user's inventory
+            userDocRef.get().addOnSuccessListener(documentSnapshot -> {
+                if (documentSnapshot.exists()) {
+                    // Retrieve the "name" field from the document
+                    String username = documentSnapshot.getString("name");
 
-            FirestoreRecyclerOptions<InventoryItem> options = new FirestoreRecyclerOptions.Builder<InventoryItem>()
-                    .setQuery(query, InventoryItem.class)
-                    .build();
+                    // Update the Toolbar Title
+                    MaterialToolbar topAppBar = binding.topAppBar;
+                    topAppBar.setTitle(username + "'s Inventory");
 
-            adapter = new InventoryAdapter(options, navController);
+                    inventoryRef = userDocRef.collection("Inventory");
 
-            RecyclerView recyclerView = binding.inventoryList;
-            recyclerView.setLayoutManager(new GridLayoutManager(getContext(), 2));
-            recyclerView.setAdapter(adapter);
+                    Query query = inventoryRef.orderBy("item_name", Query.Direction.ASCENDING);
+
+                    FirestoreRecyclerOptions<InventoryItem> options = new FirestoreRecyclerOptions.Builder<InventoryItem>()
+                            .setQuery(query, InventoryItem.class)
+                            .build();
+
+                    adapter = new InventoryAdapter(options, navController);
+
+                    RecyclerView recyclerView = binding.inventoryList;
+                    recyclerView.setLayoutManager(new GridLayoutManager(getContext(), 2));
+                    recyclerView.setAdapter(adapter);
+                    adapter.startListening();
+                }
+            }).addOnFailureListener(e -> {
+                // Handle failure, e.g., log an error message or show a toast
+                ToastUtils.showToast(getContext(), "Error getting user's info");
+            });
         }
-    }
-
-    // Sets The Title Of The Top App Bar To The User's Username
-    private void setAppBarTitle(String userId) {
-        // Assuming you have a reference to the current user's document in Firestore
-        DocumentReference userDocRef = FirebaseFirestore.getInstance().collection("users").document(userId);
-
-        // Get the user's document data
-        userDocRef.get().addOnSuccessListener(documentSnapshot -> {
-            if (documentSnapshot.exists()) {
-                // Retrieve the "name" field from the document
-                String username = documentSnapshot.getString("name");
-
-                // Update the Toolbar Title
-                MaterialToolbar topAppBar = binding.topAppBar;
-                topAppBar.setTitle(username + "'s Inventory");
-
-                // You can use the username to set any other UI components or perform additional actions.
-            }
-        }).addOnFailureListener(e -> {
-            // Handle failure, e.g., log an error message or show a toast
-            ToastUtils.showToast(getContext(), "Error getting user's username");
-        });
     }
 
     // Sets The On Click Listener For The Top App Bar

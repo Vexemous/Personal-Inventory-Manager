@@ -8,6 +8,8 @@ import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.os.Bundle;
 
+import androidx.activity.result.ActivityResultLauncher;
+import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.camera.core.CameraSelector;
@@ -77,7 +79,6 @@ public class ItemCameraFragment extends Fragment {
     private ObjectDetector objectDetector;
     private String Object_name = null;
     private File photoFile;
-    private static final int REQUEST_PERMISSIONS = 1;
     private static final String CAMERA_PERMISSION = android.Manifest.permission.CAMERA;
     private boolean canClickButton = true;
     private static final int PICK_IMAGE_REQUEST = 1;
@@ -86,7 +87,6 @@ public class ItemCameraFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
     }
 
     @Override
@@ -389,7 +389,6 @@ public class ItemCameraFragment extends Fragment {
     // Check if the permissions (camera) are granted
     private boolean checkPermissions() {
         int cameraPermission = ContextCompat.checkSelfPermission(requireContext(), CAMERA_PERMISSION);
-
         List<String> permissionsList = new ArrayList<>();
 
         if (cameraPermission != PackageManager.PERMISSION_GRANTED) {
@@ -397,35 +396,33 @@ public class ItemCameraFragment extends Fragment {
         }
 
         if (!permissionsList.isEmpty()) {
-            ActivityCompat.requestPermissions(requireActivity(), permissionsList.toArray(new String[0]), REQUEST_PERMISSIONS);
+            requestPermissionsLauncher.launch(permissionsList.toArray(new String[0]));
+            return false;
+        } else {
+            return true;
         }
-        return cameraPermission == PackageManager.PERMISSION_GRANTED;
     }
 
-    // Start camera if permission are granted
-    @Override
-    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
-        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+    // Use the ActivityResultLauncher to handle permission requests
+    private final ActivityResultLauncher<String[]> requestPermissionsLauncher = registerForActivityResult(
+            new ActivityResultContracts.RequestMultiplePermissions(), permissions -> {
+                // Check if all permissions are granted
+                boolean allPermissionsGranted = true;
+                for (boolean isGranted : permissions.values()) {
+                    if (!isGranted) {
+                        allPermissionsGranted = false;
+                        break;
+                    }
+                }
 
-        if (requestCode == REQUEST_PERMISSIONS) {
-            // Check if all permissions are granted
-            boolean allPermissionsGranted = true;
-            for (int result : grantResults) {
-                if (result != PackageManager.PERMISSION_GRANTED) {
-                    allPermissionsGranted = false;
-                    break;
+                if (allPermissionsGranted) {
+                    setupCustomModel();
+                } else {
+                    // Permissions denied, show a toast
+                    ToastUtils.showToast(requireContext(),"Camera permissions were denied.");
                 }
             }
-
-            if (!allPermissionsGranted) {
-                ToastUtils.showToast(requireContext(),"Camera permissions were denied. " +
-                        "Cannot take image");
-            }
-            else {
-                setupCustomModel();
-            }
-        }
-    }
+    );
 
     @Override
     public void onStart() {
