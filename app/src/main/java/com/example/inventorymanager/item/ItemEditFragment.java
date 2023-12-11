@@ -181,7 +181,6 @@ public class ItemEditFragment extends Fragment {
             }
             // Replace current image path with camera image path
             itemImagePath = CameraImagePath;
-            Log.d("Image Path", "Fetching From Camera");
         }
         else {
             // If camera image path has no image
@@ -197,7 +196,6 @@ public class ItemEditFragment extends Fragment {
             else {
                 itemImagePath = item.getImage_path();
             }
-            Log.d("Image Path", "Fetching From Shared View Model");
         }
 
         Log.d("Image", "Image Path: " + itemImagePath);

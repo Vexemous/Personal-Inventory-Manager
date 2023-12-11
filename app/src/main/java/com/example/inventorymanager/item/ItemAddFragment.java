@@ -154,7 +154,6 @@ public class ItemAddFragment extends Fragment {
                 deleteTemporaryFile(item.getImage_path());
             }
 
-            Log.d("Image Path", "Fetching From Camera");
         }
         // If camera Image path is null or has No Image
         else {
@@ -164,7 +163,6 @@ public class ItemAddFragment extends Fragment {
             }
 
             itemImagePath = null;
-            Log.d("Image Path", "Fetching From Null");
         }
     }
 
