@@ -167,6 +167,7 @@ public class ItemEditFragment extends Fragment {
         }
     }
 
+    // Method to check if the image path is the same as the camera image path
     public void checkImagePath(String CameraImagePath, InventoryItem item){
         // If camera Image path is not null and has an image
         if (CameraImagePath != null && !Objects.equals(CameraImagePath, "No Image")) {
@@ -203,7 +204,7 @@ public class ItemEditFragment extends Fragment {
         Log.d("Image", "Firebase Image Path: " + sharedViewModel.getFirebaseImage().getValue());
     }
 
-    // Get Item Details From FireStore
+    // Method to get initial item details from FireStore
     private void setupItemDetailsFireStore() {
 
         if (args != null && mAuth.getCurrentUser() != null) {

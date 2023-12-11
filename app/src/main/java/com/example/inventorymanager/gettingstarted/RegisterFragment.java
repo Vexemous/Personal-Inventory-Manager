@@ -104,8 +104,7 @@ public class RegisterFragment extends Fragment {
                 });
     }
 
-
-    // TODO: Create Test Cases for Registration Validation
+    // Handles the case when the user does not enter all the required details
     private void handleDetailErrors(){
         // Handle the case account details are empty
         if (TextUtils.isEmpty(email) && TextUtils.isEmpty(password) && TextUtils.isEmpty(username)) {

@@ -92,6 +92,7 @@ public class ItemAddFragment extends Fragment {
         setupUI();
     }
 
+    // Method to setup the item details
     public void setupItemDetails(){
         // Setup shared view model to retain data
         args = getArguments();
@@ -141,6 +142,7 @@ public class ItemAddFragment extends Fragment {
         }
     }
 
+    // Method to check if the image path is from camera or from shared view model
     public void checkImagePath(String CameraImagePath, InventoryItem item){
         // If camera Image path is not null and has Image
         if (CameraImagePath != null) {
@@ -166,6 +168,7 @@ public class ItemAddFragment extends Fragment {
         }
     }
 
+    // Method to set the initial item details
     private void setupInitialItemDetails(){
         if (args != null) {
             // Set the initial item details if it exists
@@ -246,6 +249,7 @@ public class ItemAddFragment extends Fragment {
         });
     }
 
+    // Method to finalize Item Details to be added to FireStore
     private void FinalizeItemDetails(){
         FirebaseFirestore db = FirebaseFirestore.getInstance();
         FirebaseUser user = mAuth.getCurrentUser();
@@ -344,6 +348,7 @@ public class ItemAddFragment extends Fragment {
         void onFailure(Exception e);
     }
 
+    // Sets default value for empty fields
     private String setValue(TextInputLayout EditText){
         if(EditText.getEditText().getText().toString().isEmpty()){
             return "";
@@ -362,6 +367,7 @@ public class ItemAddFragment extends Fragment {
         }
     }
 
+    // Sets default value for empty fields
     private Integer setIntValue(TextInputLayout EditText){
         if(EditText.getEditText().getText().toString().isEmpty()){
             return 0;

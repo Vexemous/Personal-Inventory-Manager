@@ -109,7 +109,7 @@ public class LoginFragment extends Fragment {
                 });
     }
 
-    // TODO: Create Test Cases for Login Validation
+    // Handles the cases where details are empty
     private void handleDetailErrors(){
         // Handle the cases where details are empty
         if (TextUtils.isEmpty(email) && TextUtils.isEmpty(password)) {

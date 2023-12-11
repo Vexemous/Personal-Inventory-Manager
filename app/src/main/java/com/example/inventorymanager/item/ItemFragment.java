@@ -216,6 +216,7 @@ public class ItemFragment extends Fragment {
         });
     }
 
+    // Method to navigate to Edit Item Fragment
     private void navigateToEditItemFragment() {
         // Navigate to Edit Item Fragment
         Bundle bundle = new Bundle();
